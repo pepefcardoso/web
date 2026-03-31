@@ -1,10 +1,11 @@
 import { apiClient } from "@/lib/api-client";
 import { FeedbackList } from "@/components/feedback/feedback-list";
 import { Sidebar } from "@/components/layout/sidebar";
+import { FeedbackSort } from "@/components/feedback/feedback-sort";
 import { FeedbackListResponse } from "@/types/feedback";
 
 interface HomeProps {
-  searchParams: Promise<{ category?: string; page?: string }>;
+  searchParams: Promise<{ category?: string; page?: string; sortBy?: string; order?: string }>;
 }
 
 export default async function HomePage(props: HomeProps) {
@@ -18,6 +19,9 @@ export default async function HomePage(props: HomeProps) {
   if (searchParams.category && searchParams.category !== "All") {
     params.category = searchParams.category;
   }
+
+  if (searchParams.sortBy) params.sortBy = searchParams.sortBy;
+  if (searchParams.order) params.order = searchParams.order;
 
   let response: FeedbackListResponse | null = null;
   let fetchError = false;
@@ -39,6 +43,7 @@ export default async function HomePage(props: HomeProps) {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
               Feedback Suggestions
             </h1>
+            <FeedbackSort />
           </div>
 
           {fetchError ? (
