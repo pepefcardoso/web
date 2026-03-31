@@ -1,8 +1,6 @@
-export default function AdminDashboardPage() {
-  return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-red-600 mb-4">Admin Dashboard</h1>
-      <p>Manage feedback statuses here.</p>
-    </main>
-  );
+import { apiClient } from "@/lib/api-client";
+
+export default async function AdminDashboardPage() {
+  const data = await apiClient("/admin-data");
+  return <div>{JSON.stringify(data)}</div>;
 }
