@@ -3,8 +3,11 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { apiClient, AppError } from "@/lib/api-client";
 import { FeedbackItem, FeedbackStatus } from "@/types/feedback";
+import { CommentItem } from "@/types/comment";
 import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "@/components/feedback/vote-button";
+import { CommentList } from "@/components/comment/comment-list";
+import { CommentForm } from "@/components/comment/comment-form";
 
 interface FeedbackDetailPageProps {
   params: Promise<{ id: string }>;
@@ -27,9 +30,13 @@ export default async function FeedbackDetailPage({
   }
 
   let feedback: FeedbackItem;
+  let comments: CommentItem[] = [];
 
   try {
-    feedback = await apiClient<FeedbackItem>(`/feedbacks/${id}`);
+    [feedback, comments] = await Promise.all([
+      apiClient<FeedbackItem>(`/feedbacks/${id}`),
+      apiClient<CommentItem[]>(`/feedbacks/${id}/comments`),
+    ]);
   } catch (error) {
     if (error instanceof AppError && error.status === 404) {
       notFound();
@@ -45,7 +52,6 @@ export default async function FeedbackDetailPage({
 
   return (
     <main className="container max-w-4xl mx-auto py-8 px-4">
-      {/* Back Navigation */}
       <Link
         href="/"
         className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
@@ -54,8 +60,7 @@ export default async function FeedbackDetailPage({
         Back to Feed
       </Link>
 
-      {/* Main Content Card */}
-      <article className="bg-card text-card-foreground rounded-xl border shadow-sm p-6 sm:p-8">
+      <article className="bg-card text-card-foreground rounded-xl border shadow-sm p-6 sm:p-8 mb-8">
         <header className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-8">
           <div className="space-y-4 flex-1">
             <div className="flex items-center gap-3 flex-wrap">
@@ -94,6 +99,17 @@ export default async function FeedbackDetailPage({
           </p>
         </div>
       </article>
+
+      <section className="bg-card text-card-foreground rounded-xl border shadow-sm p-6 sm:p-8">
+        <h2 className="text-xl font-semibold mb-6">Comments ({comments.length})</h2>
+
+        <CommentList comments={comments} />
+
+        <div className="mt-8 border-t pt-8">
+          <h3 className="text-lg font-medium mb-4">Add a Comment</h3>
+          <CommentForm feedbackId={id} />
+        </div>
+      </section>
     </main>
   );
 }
