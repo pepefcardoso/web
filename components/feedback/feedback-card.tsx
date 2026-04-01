@@ -1,23 +1,19 @@
 import Link from "next/link";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChevronUp } from "lucide-react";
 import { FeedbackItem } from "@/types/feedback";
+import { VoteButton } from "./vote-button";
 
-interface FeedbackCardProps {
-    feedback: FeedbackItem;
-}
-
-export function FeedbackCard({ feedback }: FeedbackCardProps) {
+export function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
     return (
         <Link href={`/feedback/${feedback.id}`} className="block group">
             <Card className="flex items-start p-4 gap-4 hover:border-blue-400 hover:shadow-sm transition-all cursor-pointer">
-                <div className="flex flex-col items-center p-2 bg-slate-50 group-hover:bg-blue-50 transition-colors rounded-lg min-w-[48px]">
-                    <ChevronUp className="h-5 w-5 text-slate-500 group-hover:text-blue-600" />
-                    <span className="font-semibold text-sm text-slate-700 group-hover:text-blue-700">
-                        {feedback.voteCount}
-                    </span>
-                </div>
+
+                <VoteButton
+                    initialVoteCount={feedback.voteCount}
+                    initialHasVoted={feedback.hasVoted}
+                    feedbackId={feedback.id}
+                />
 
                 <div className="flex-1 min-w-0">
                     <CardTitle className="text-lg mb-1 truncate group-hover:text-blue-600 transition-colors">

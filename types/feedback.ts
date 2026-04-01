@@ -11,6 +11,7 @@ export interface FeedbackItem {
     name: string;
   };
   voteCount: number;
+  hasVoted: boolean;
   createdAt: string;
 }
 
