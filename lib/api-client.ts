@@ -24,7 +24,9 @@ export async function apiClient<T = unknown>(
   options: FetchOptions = {},
 ): Promise<T> {
   const isServer = typeof window === "undefined";
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
+
+  const baseUrl =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333/api";
 
   const headers = new Headers(options.headers);
 
