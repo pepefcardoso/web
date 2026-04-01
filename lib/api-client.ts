@@ -2,12 +2,19 @@ import { redirect } from "next/navigation";
 
 export class AppError extends Error {
   public readonly status: number;
+  public readonly errors?: any;
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, errors?: any) {
     super(message);
     this.status = status;
     this.name = "AppError";
+    this.errors = errors;
   }
+}
+
+export interface ApiResponse<T = any> {
+  status: string;
+  data: T;
 }
 
 interface FetchOptions extends RequestInit {
@@ -17,7 +24,7 @@ interface FetchOptions extends RequestInit {
 
 /**
  * Unified API Client for Server and Client Components.
- * Automatically handles cookie injection, 401 redirects, and standardizes errors.
+ * Automatically handles cookie injection, 401 redirects, envelope unwrapping, and standardizes errors.
  */
 export async function apiClient<T = unknown>(
   endpoint: string,
@@ -66,11 +73,11 @@ export async function apiClient<T = unknown>(
   const response = await fetch(url, config);
 
   if (!response.ok) {
-    let errorData: { message?: string } = {};
+    let errorData: { message?: string; errors?: any } = {};
     try {
       errorData = await response.json();
     } catch {
-      // Ignored: Response is not JSON (e.g., 502 Bad Gateway HTML page)
+      // Ignored: Response is not JSON
     }
 
     if (response.status === 401) {
@@ -90,6 +97,7 @@ export async function apiClient<T = unknown>(
         response.statusText ||
         "An unexpected error occurred",
       response.status,
+      errorData.errors,
     );
   }
 
@@ -97,5 +105,7 @@ export async function apiClient<T = unknown>(
     return {} as T;
   }
 
-  return response.json();
+  const json = await response.json();
+
+  return json.data !== undefined ? (json.data as T) : (json as T);
 }

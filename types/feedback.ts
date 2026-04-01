@@ -24,3 +24,13 @@ export interface FeedbackListResponse {
     currentPage: number;
   };
 }
+
+export const FEEDBACK_CATEGORIES = [
+  "UI/UX",
+  "Bug",
+  "Feature Request",
+  "Performance",
+  "Other",
+] as const;
+
+export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];

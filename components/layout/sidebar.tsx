@@ -4,17 +4,18 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-
-const categories = ["All", "Feature", "UI", "UX", "Bug", "Performance"];
+import { FEEDBACK_CATEGORIES } from "@/types/feedback";
 
 export function Sidebar() {
     const searchParams = useSearchParams();
     const currentCategory = searchParams.get("category") || "All";
 
+    const allCategories = ["All", ...FEEDBACK_CATEGORIES];
+
     return (
         <aside className="w-full md:w-48 lg:w-56 shrink-0">
             <div className="sticky top-20 flex flex-row md:flex-col gap-2 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
-                {categories.map((category) => {
+                {allCategories.map((category) => {
                     const isActive = currentCategory === category;
                     const href = category === "All" ? "/" : `/?category=${category}`;
 

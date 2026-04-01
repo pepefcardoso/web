@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -20,11 +21,15 @@ interface User {
 
 export function UserNav({ user }: { user: User }) {
     const router = useRouter();
+    const { logout } = useAuth();
 
     const handleLogout = async () => {
         try {
-            await fetch('/api/auth/logout', { method: 'POST' });
+            await logout();
+
             router.refresh();
+
+            router.push('/');
         } catch (error) {
             console.error("Erro ao fazer logout", error);
         }
@@ -62,7 +67,10 @@ export function UserNav({ user }: { user: User }) {
                 )}
 
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50">
+                <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
+                >
                     Sair
                 </DropdownMenuItem>
             </DropdownMenuContent>

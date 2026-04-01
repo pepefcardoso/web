@@ -13,13 +13,6 @@ interface User {
     [key: string]: unknown;
 }
 
-interface GetMeResponse {
-    status: string;
-    data: {
-        user: User;
-    };
-}
-
 async function getUser() {
     const cookieStore = await cookies();
     const token = cookieStore.get('token');
@@ -27,8 +20,8 @@ async function getUser() {
     if (!token) return null;
 
     try {
-        const response = await apiClient<GetMeResponse>('/users/me');
-        return response.data?.user || null;
+        const response = await apiClient<{ user: User }>('/users/me');
+        return response.user || null;
     } catch {
         return null;
     }
