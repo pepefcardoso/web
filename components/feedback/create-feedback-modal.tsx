@@ -36,9 +36,9 @@ import {
 import { Button } from "@/components/ui/button";
 
 const createFeedbackSchema = z.object({
-    title: z.string().min(5, "O título deve ter pelo menos 5 caracteres").max(100, "O título é muito longo"),
-    category: z.string().min(1, "Selecione uma categoria válida"),
-    description: z.string().min(10, "A descrição deve ter pelo menos 10 caracteres").max(1000, "A descrição é muito longa"),
+    title: z.string().min(5, "The title must have at least 5 characters").max(100, "The title is too long"),
+    category: z.string().min(1, "Select a valid category"),
+    description: z.string().min(10, "The description must have at least 10 characters").max(1000, "The description is too long"),
 });
 
 type CreateFeedbackFormValues = z.infer<typeof createFeedbackSchema>;
@@ -74,7 +74,7 @@ export function CreateFeedbackModal() {
             form.setError("root", {
                 message: error instanceof Error
                     ? error.message
-                    : "Falha ao enviar o feedback. Tente novamente."
+                    : "Failed to submit feedback. Please try again."
             });
         } finally {
             setIsLoading(false);
@@ -86,15 +86,15 @@ export function CreateFeedbackModal() {
             <DialogTrigger asChild>
                 <Button className="gap-2">
                     <Plus className="h-4 w-4" />
-                    <span className="hidden sm:inline">Sugerir Ideia</span>
+                    <span className="hidden sm:inline">Suggest Idea</span>
                 </Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Novo Feedback</DialogTitle>
+                    <DialogTitle>New Feedback</DialogTitle>
                     <DialogDescription>
-                        Compartilhe ideias, reporte bugs ou solicite novas funcionalidades.
+                        Share your ideas, report bugs, or request new features.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -112,10 +112,10 @@ export function CreateFeedbackModal() {
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Título</FormLabel>
+                                    <FormLabel>Title</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Ex: Modo escuro na visualização de relatórios"
+                                            placeholder="Ex: Dark mode for report viewing"
                                             disabled={isLoading}
                                             {...field}
                                         />
@@ -130,7 +130,7 @@ export function CreateFeedbackModal() {
                             name="category"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Categoria</FormLabel>
+                                    <FormLabel>Category</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
@@ -138,7 +138,7 @@ export function CreateFeedbackModal() {
                                     >
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Selecione uma categoria" />
+                                                <SelectValue placeholder="Select a category" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
@@ -159,10 +159,10 @@ export function CreateFeedbackModal() {
                             name="description"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Descrição</FormLabel>
+                                    <FormLabel>Description</FormLabel>
                                     <FormControl>
                                         <Textarea
-                                            placeholder="Adicione detalhes sobre sua sugestão..."
+                                            placeholder="Add details about your suggestion..."
                                             className="resize-none"
                                             rows={4}
                                             disabled={isLoading}
@@ -181,10 +181,10 @@ export function CreateFeedbackModal() {
                                 onClick={() => setOpen(false)}
                                 disabled={isLoading}
                             >
-                                Cancelar
+                                Cancel
                             </Button>
                             <Button type="submit" disabled={isLoading}>
-                                {isLoading ? "Enviando..." : "Enviar Feedback"}
+                                {isLoading ? "Sending..." : "Submit Feedback"}
                             </Button>
                         </div>
 

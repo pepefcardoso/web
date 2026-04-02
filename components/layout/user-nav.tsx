@@ -33,7 +33,7 @@ export function UserNav({ user }: { user: User }) {
             router.refresh();
             router.push('/login');
         } catch (error) {
-            console.error("Erro ao fazer logout", error);
+            console.error("Error occurred while logging out", error);
         }
     };
 
@@ -67,7 +67,7 @@ export function UserNav({ user }: { user: User }) {
                     <DropdownMenuItem asChild>
                         <Link href="/profile" className="cursor-pointer w-full">
                             <UserIcon className="mr-2 h-4 w-4" />
-                            <span>Perfil</span>
+                            <span>Profile</span>
                         </Link>
                     </DropdownMenuItem>
 
@@ -75,7 +75,7 @@ export function UserNav({ user }: { user: User }) {
                         <DropdownMenuItem asChild>
                             <Link href="/admin" className="cursor-pointer w-full">
                                 <LayoutDashboard className="mr-2 h-4 w-4" />
-                                <span>Painel Admin</span>
+                                <span>Admin Panel</span>
                             </Link>
                         </DropdownMenuItem>
                     )}
@@ -86,7 +86,7 @@ export function UserNav({ user }: { user: User }) {
                     className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
                 >
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Sair</span>
+                    <span>Sign Out</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

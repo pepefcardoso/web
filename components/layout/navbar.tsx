@@ -32,10 +32,10 @@ export function Navbar() {
                         ) : (
                             <>
                                 <Button variant="ghost" asChild className="hidden sm:inline-flex">
-                                    <Link href="/login">Entrar</Link>
+                                    <Link href="/login">Login</Link>
                                 </Button>
                                 <Button asChild>
-                                    <Link href="/register">Cadastrar</Link>
+                                    <Link href="/register">Sign Up</Link>
                                 </Button>
                             </>
                         )
