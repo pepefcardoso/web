@@ -142,11 +142,11 @@ export function CreateFeedbackModal() {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem value="Feature">Feature</SelectItem>
-                                            <SelectItem value="UI">UI</SelectItem>
-                                            <SelectItem value="UX">UX</SelectItem>
+                                            <SelectItem value="Feature Request">Feature Request</SelectItem>
+                                            <SelectItem value="UI/UX">UI/UX</SelectItem>
                                             <SelectItem value="Bug">Bug</SelectItem>
                                             <SelectItem value="Performance">Performance</SelectItem>
+                                            <SelectItem value="Other">Other</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />

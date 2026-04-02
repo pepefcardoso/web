@@ -42,6 +42,7 @@ export async function apiClient<T = unknown>(
   }
 
   const config: RequestInit = {
+    cache: "no-store",
     ...options,
     headers,
     credentials: "include",

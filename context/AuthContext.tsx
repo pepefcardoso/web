@@ -26,11 +26,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const fetchSession = async () => {
             try {
-                const res = await apiClient<{ data: { user: User } }>('/users/me', {
+                const res = await apiClient<{ user: User }>('/users/me', {
                     skipRedirect: true,
                 });
-                if (res.data?.user) {
-                    setUser(res.data.user);
+
+                if (res?.user) {
+                    setUser(res.user);
                 }
             } catch (error) {
                 console.error('Failed to fetch session:', error);
