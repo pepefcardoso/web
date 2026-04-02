@@ -20,6 +20,7 @@ export interface ApiResponse<T = any> {
 interface FetchOptions extends RequestInit {
   params?: Record<string, string>;
   skipRedirect?: boolean;
+  returnFullResponse?: boolean;
 }
 
 /**
@@ -107,6 +108,10 @@ export async function apiClient<T = unknown>(
   }
 
   const json = await response.json();
+
+  if (options.returnFullResponse) {
+    return json as T;
+  }
 
   return json.data !== undefined ? (json.data as T) : (json as T);
 }

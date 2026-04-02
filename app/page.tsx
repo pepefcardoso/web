@@ -29,7 +29,10 @@ export default async function HomePage(props: HomeProps) {
   let fetchError = false;
 
   try {
-    response = await apiClient<FeedbackListResponse>("/feedbacks", { params });
+    response = await apiClient<FeedbackListResponse>("/feedbacks", {
+      params,
+      returnFullResponse: true
+    });
   } catch (error) {
     console.error("Failed to fetch feedbacks on homepage:", error);
     fetchError = true;
